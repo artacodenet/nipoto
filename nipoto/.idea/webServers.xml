@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6759a1e0-7708-433b-a43e-8b0c1faf2d4a" name="ahanbox" url="http://ahanbox.com">
+        <fileTransfer host="ahanbox.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="07cca9cc-60d0-4518-ae2b-c52726d078ba" name="cargo" url="http://cargoinquiry.com">
+        <fileTransfer host="cargoinquiry.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

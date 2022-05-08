@@ -1,0 +1,170 @@
+@font-face {
+    font-family: 'IranSans';
+    src: url('../fonts/IRANSansWeb.woff');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'IranSans' !important;
+}
+
+.inline_block {
+    display: inline-block;
+}
+
+.nipo_HashTags {
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(271.15deg, #FF5252 -0.39%, #FF9270 103.27%);
+    mix-blend-mode: normal;
+}
+
+.Hashtag_bc, .HashtagsLabel {
+    margin: 5px 0;
+    display: inline-block;
+    color: #fff;
+    top: 15px;
+    font-size: 13px;
+}
+.Hashtag_bc a{
+    color: #fff;
+    text-decoration: none;
+}
+.Hashtag_bc a:hover{
+    color: #fff;
+}
+.HashtagsLabel {
+    margin-left: 25px;
+}
+
+.Hashtag_bc {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.nipo_HeaderNav {
+    width: 100%;
+    background: #fff;
+    padding: 15px 0;
+}
+
+.nipo_NavMenu {
+    margin-right: 40px;
+    padding-top: 10px;
+}
+
+.nipo_logo {
+    width: 165px;
+    height: 35px;
+    background: url("../images/LOGO.png") center center no-repeat;
+    background-size: contain;
+    margin-left: 50px;
+}
+.menuItem {
+    padding: 0!important;
+}
+.menuItem li{
+    display: inline-block;
+    color: #000000!important;
+    margin-left: 20px!important;
+    font-style: normal!important;
+    font-weight: 400!important;
+    font-size: 12px!important;
+    line-height: 24px!important;
+    text-align: right!important;
+    text-decoration: none;
+}
+.menuItem a {
+    color: #000000!important;
+    text-decoration: none;
+}
+.left_menu {
+    float: left;
+}
+
+.TradingMarket_button {
+    background: linear-gradient(91.19deg, #FF5252 -4.29%, #FF9270 100%);
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    padding: 10px 25px;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 18px;
+    margin-right: 50px;
+}
+
+.nipo_search, .nipo_user_account {
+    margin-right: 25px;
+}
+#responsive_menu_btn{
+    border: none;
+    background: none;
+}
+.responsive_menu li {
+    width: 100%;
+    margin: 0!important;
+    padding: 7px 0;
+}
+.responsive_menu a {
+    width: 100%;
+    color: #FFFFFF!important;
+}
+.responsive_menu .menu-nipoto-container{
+    padding: 20px 0;
+    height: 100%;
+}
+.responsive_menu {
+    background: black;
+    width: 60%;
+    padding: 120px 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    margin-right: -60%;
+    z-index: 10;
+}
+#responsive_menu_close {
+    border: none;
+    background: none;
+    color: #FFFFFF;
+    position: absolute;
+    top: 70px;
+}
+@media screen and (max-device-width: 1024px) {
+    .nipo_NavMenu {
+        display: none;
+    }
+
+    .TradingMarket_button {
+        margin-right: 10px !important;
+        padding: 7px 10px !important;
+    }
+
+    .nipo_search, .nipo_user_account {
+        margin-right: 10px;
+    }
+
+    .nipo_HeaderNav {
+        padding: 5px 0 !important;
+    }
+
+    .nipo_logo {
+        width: 100px !important;
+        height: 25px !important;
+    }
+
+    .Hashtag_bc, .HashtagsLabel {
+        font-size: 10px;
+    }
+}
+@media screen and (min-device-width: 1024px){
+    .responsive_menu {
+        display: none;
+    }
+}
