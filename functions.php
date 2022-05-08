@@ -6,8 +6,6 @@
  */
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Carbon\Carbon;
-
 // Actions
 add_action('init', 'blockchin_nav_menu');
 add_action('widgets_init', 'nipoto_weighet_footer');
@@ -32,7 +30,8 @@ function handle_date($date)
         'day',
         'week',
         'ago',
-        's'
+        's',
+        'from now'
     ],
         [
             'ثانیه',
@@ -42,6 +41,7 @@ function handle_date($date)
             'سال',
             'روز',
             'هفته',
+            ''
         ], $date);
     return $date . "پیش";
 }
@@ -240,7 +240,7 @@ function post_author_selector($count)
     return $query->posts;
 }
 
-function post_category_selector($count)
+function post_category_selector($count, $term_id= -1,$taxonomy="")
 {
     $paged = isset($_GET["paged"]) ? $_GET["paged"] : 1;
     // WP_Query arguments
@@ -264,6 +264,15 @@ function post_category_selector($count)
 
     );
 
+    if ($term_id != -1) :
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => $taxonomy,
+                'terms' => $term_id,
+                'field' => 'term_id',
+            )
+        );
+    endif;
 
 // The Query
     $query = new WP_Query($args);
@@ -373,7 +382,7 @@ function get_post_by_review($count)
 }
 
 // get post is video
-function get_post_is_video($count, $is_video)
+function get_post_is_video($count, $is_video ,$taxonomy = 'category',$term_id = -1)
 {
     // WP_Query arguments
     $args = array(
@@ -394,6 +403,15 @@ function get_post_is_video($count, $is_video)
         ),
     );
 
+    if ($term_id != -1) :
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'category',
+                'terms' => $term_id,
+                'field' => 'term_id',
+            )
+        );
+    endif;
 // The Query
     $query = new WP_Query($args);
     return $query->posts;
