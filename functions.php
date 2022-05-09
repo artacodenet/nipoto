@@ -453,7 +453,7 @@ function get_post_by_category($term_id = -1, $count = NIPTO_POST_PER_PAGA)
 
 }
 
-function get_post_by_term($term_id = -1,$taxonomy='category', $count = NIPTO_POST_PER_PAGA)
+function get_post_by_term($term_id = -1, $taxonomy = 'category', $count = NIPTO_POST_PER_PAGA)
 {
 
     $paged = isset($_GET["page"]) ? $_GET["page"] : 1;
@@ -500,7 +500,7 @@ function nipo_meta_box_title()
 
 function nipo_meta_box_add()
 {
-    add_meta_box('video_checking', 'video checking', 'video_checking_function', 'post', 'side', 'default');
+    add_meta_box('video_checking', 'جزییات نوشته', 'video_checking_function', 'post', 'side', 'default');
 }
 
 //subtitles meta box add to single page callback
@@ -508,12 +508,16 @@ function sub_titles_function()
 {
     $subtitle1 = get_post_meta(get_the_id(), 'nipo_single_subtitle_1', true);
     $subtitle2 = get_post_meta(get_the_id(), 'nipo_single_subtitle_2', true);
+    $time_read = get_post_meta(get_the_id(), 'nipo_time_read_post', true);
     ?>
     <input style="width: 100%; margin-bottom: 10px" type="text" name="nipo_single_subtitle_1"
            placeholder="ساب تایتل اول صفحه سینگل"
            value='<?php echo $subtitle1 ?>'>
-    <input style="width: 100%" type="text" name="nipo_single_subtitle_2" placeholder="ساب تایتل دوم صفحه سینگل"
+    <input style="width: 100%; margin-bottom: 10px" type="text" name="nipo_single_subtitle_2" placeholder="ساب تایتل دوم صفحه سینگل"
            value='<?php echo $subtitle2 ?>'>
+
+    <input style="width: 100%" type="text" name="nipo_time_read_post" placeholder="زمان مطالعه پست"
+           value='<?php echo $time_read ?>'>
     <?php
 }
 
@@ -552,6 +556,10 @@ function save_post_nipoto()
     if (isset($_POST['nipo_single_subtitle_2'])) {
         update_post_meta($post_id, 'nipo_single_subtitle_2', $_POST['nipo_single_subtitle_2']);
     }
+
+    if (isset($_POST['nipo_single_subtitle_2'])) {
+        update_post_meta($post_id, 'nipo_time_read_post', $_POST['nipo_time_read_post']);
+    }
 }
 
 // Create Function Custom Include File
@@ -588,31 +596,32 @@ nipo_include('template-parts/customer/api', 'api');
 nipo_include('template-parts/shortcode', 'shortcode');
 
 
-add_action('customize_register','my_customize_register');
-function my_customize_register( $wp_customize ) {
+add_action('customize_register', 'my_customize_register');
+function my_customize_register($wp_customize)
+{
     $wp_customize->add_section(
         'general_sec',
         array(
-            'title' => __( 'Theme General Options', 'enigma' ),
+            'title' => __('Theme General Options', 'enigma'),
             'description' => 'Here you can customize Your theme\'s general Settings',
-            'panel'=>'enigma_theme_option',
-            'capability'=>'edit_theme_options',
+            'panel' => 'enigma_theme_option',
+            'capability' => 'edit_theme_options',
             'priority' => 35,
 
         )
     );
 
-    $wp_customize->add_control( 'setting_id', array(
+    $wp_customize->add_control('setting_id', array(
         'type' => 'file',
         'priority' => 10, // Within the section.
         'section' => 'title_tagline', // Required, core or custom.
-        'label' => __( 'Date' ),
-        'description' => __( 'This is a date control with a red border.' ),
+        'label' => __('Date'),
+        'description' => __('This is a date control with a red border.'),
         'input_attrs' => array(
             'class' => 'my-custom-class-for-js',
             'style' => 'border: 1px solid #900',
-            'placeholder' => __( 'mm/dd/yyyy' ),
+            'placeholder' => __('mm/dd/yyyy'),
         ),
         'active_callback' => 'is_front_page',
-    ) );
+    ));
 }

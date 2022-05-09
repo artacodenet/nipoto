@@ -15,6 +15,8 @@ jQuery(document).ready(function ($) {
             },
             success: function (data) {
                 $('.like_count span').text(data);
+                var n =$('.persian')
+                n.persianNum();
             },
             complete: function () {
                 $("#single_like_count").prop('disabled', false);
@@ -106,6 +108,8 @@ jQuery(document).ready(function ($) {
     });
     $('#responsive_menu_close').click(function (){
         $('.responsive_menu').css({'margin-right': '-60%', 'transition': 'margin 100ms'});
-    })
+    });
 
+    var n =$('.persian')
+    n.persianNum();
 });

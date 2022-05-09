@@ -21,6 +21,7 @@ function register_script()
     wp_register_script('nip_bootstrap_js', get_stylesheet_directory_uri() . '/assets/js/bootstrap.bundle.min.js', false, '1.0.0', 'all');
     wp_register_script('slick_js', get_stylesheet_directory_uri() . '/assets/js/slick.js', false, '1.0.0', 'all');
     wp_register_script('moment', get_stylesheet_directory_uri() . '/assets/js/moment.js', false, '1.0.0', 'all');
+    wp_register_script('persianNum', get_stylesheet_directory_uri() . '/assets/js/persianNum.jquery-2.min.js', false, '1.0.0', 'all');
 
 
     // Stylesheet Lib
@@ -44,6 +45,7 @@ function enqueue_style()
     wp_enqueue_script('slick_js');
     wp_enqueue_script('nip_jquery');
     wp_enqueue_script('moment');
+    wp_enqueue_script('persianNum');
 
     //css
     wp_enqueue_style('nipoto');
