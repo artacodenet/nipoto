@@ -240,7 +240,7 @@ function post_author_selector($count,$author)
     return array("posts" => $query->posts, "pagination" => wpdocs_get_paginated_links($query));
 }
 
-function post_category_selector($count)
+function post_category_selector($count, $term_id= -1,$taxonomy="")
 {
     $paged = isset($_GET["paged"]) ? $_GET["paged"] : 1;
     // WP_Query arguments
@@ -264,6 +264,15 @@ function post_category_selector($count)
 
     );
 
+    if ($term_id != -1) :
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => $taxonomy,
+                'terms' => $term_id,
+                'field' => 'term_id',
+            )
+        );
+    endif;
 
 // The Query
     $query = new WP_Query($args);
@@ -373,7 +382,7 @@ function get_post_by_review($count)
 }
 
 // get post is video
-function get_post_is_video($count, $is_video)
+function get_post_is_video($count, $is_video ,$taxonomy = 'category',$term_id = -1)
 {
     // WP_Query arguments
     $args = array(
@@ -394,6 +403,15 @@ function get_post_is_video($count, $is_video)
         ),
     );
 
+    if ($term_id != -1) :
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'category',
+                'terms' => $term_id,
+                'field' => 'term_id',
+            )
+        );
+    endif;
 // The Query
     $query = new WP_Query($args);
     return $query->posts;

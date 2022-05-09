@@ -215,8 +215,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                                                 <div class="row">
                                                     <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                         <div class="article_single_img inline_block">
-                                                            <img src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
-                                                                 alt="">
+                                                            <a href="<?php echo get_permalink($post->ID) ?>"><img src="<?php echo get_the_post_thumbnail_url($post->ID) ?>" alt=""></a>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-sm-12 col-md-12 col-lg-8">
