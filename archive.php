@@ -339,7 +339,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                             <div class="col-12 col-sm-12 col-md-6 col-lg-12 ">
                                 <p class="most_popular_content mb-3">محبوبترین مطالب</p>
                                 <?php
-                                $most_popular = get_most_popular_content(-1);
+                                $most_popular = get_most_popular_content(MOST_POPULAR_PER_PAGE);
                                 if ($most_popular != null):
                                     foreach ($most_popular as $post):
                                         ?>
@@ -386,7 +386,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-12 ">
                                 <p class="most_visited_content mb-3 mt-5">پربازدیدترین مطالب</p>
-                                <?php foreach (get_post_by_review(5) as $post) : ?>
+                                <?php foreach (get_post_by_review(MOST_PERVIWE_PER_PAGE) as $post) : ?>
                                     <div class="articles_item">
                                         <div class="article_item_content">
                                             <div class="row">

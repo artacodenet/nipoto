@@ -222,95 +222,42 @@ $post_author = post_author_selector(NIPO_AUTHOR_POST_PER_PAGE, $current_user_id)
                                 ?>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-12 ">
-                                <p class="most_visited_content mb-3 mt-5 ">پربازدیدترین مطالب</p>
-                                <div class="articles_item">
-                                    <div class="article_item_content">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <div class="article_item_image inline_block">
-                                                    <?php nipoto_image('Rectangle 17.png', 'artacode'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="article_item_content_detail inline_block">
-                                                    <div class="article_item_content_title">
-                                                        <span>اخبار روزانه</span>
-                                                    </div>
-                                                    <div class="article_item_content_info">
-                                                        <p>ری دالیو، میلیاردر مطرح: دولت‌ها با بیت کوین کنار نخواهند
-                                                            آمد</p>
+                                <p class="most_visited_content mb-3 mt-5">پربازدیدترین مطالب</p>
+                                <?php foreach (get_post_by_review(MOST_PERVIWE_PER_PAGE) as $post) : ?>
+                                    <div class="articles_item">
+                                        <div class="article_item_content">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="article_item_image inline_block">
+                                                        <a href="<?php echo get_permalink($post->post_id) ?>">
+                                                            <img src='<?php echo get_the_post_thumbnail_url($post->post_id) ?>'>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="articles_item">
-                                    <div class="article_item_content">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <div class="article_item_image inline_block">
-                                                    <?php nipoto_image('Rectangle 17.png', 'artacode'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="article_item_content_detail inline_block">
-                                                    <div class="article_item_content_title">
-                                                        <span>اخبار روزانه</span>
-                                                    </div>
-                                                    <div class="article_item_content_info">
-                                                        <p>ری دالیو، میلیاردر مطرح: دولت‌ها با بیت کوین کنار نخواهند
-                                                            آمد</p>
+                                                <div class="col-9">
+                                                    <div class="article_item_content_detail inline_block">
+                                                        <div class="article_item_content_title">
+                                                            <?php
+                                                            $terms = get_the_terms($post->ID, "category");
+                                                            $current_term = get_term($terms[0])->name;
+                                                            ?>
+                                                            <a href="<?php echo get_term_link($terms[0], "category") ?>">
+                                                            <span>
+                                                                <?php echo $current_term; ?>
+                                                            </span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="article_item_content_info">
+                                                            <a href="<?php echo get_permalink($post->post_id) ?>">
+                                                                <p class="word_space"><?php echo $post->post_title; ?></p>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="articles_item">
-                                    <div class="article_item_content">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <div class="article_item_image inline_block">
-                                                    <?php nipoto_image('Rectangle 17.png', 'artacode'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="article_item_content_detail inline_block">
-                                                    <div class="article_item_content_title">
-                                                        <span>اخبار روزانه</span>
-                                                    </div>
-                                                    <div class="article_item_content_info">
-                                                        <p>ری دالیو، میلیاردر مطرح: دولت‌ها با بیت کوین کنار نخواهند
-                                                            آمد</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="articles_item">
-                                    <div class="article_item_content">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <div class="article_item_image inline_block">
-                                                    <?php nipoto_image('Rectangle 17.png', 'artacode'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="article_item_content_detail inline_block">
-                                                    <div class="article_item_content_title">
-                                                        <span>اخبار روزانه</span>
-                                                    </div>
-                                                    <div class="article_item_content_info">
-                                                        <p>ری دالیو، میلیاردر مطرح: دولت‌ها با بیت کوین کنار نخواهند
-                                                            آمد</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
