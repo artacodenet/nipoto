@@ -11,22 +11,23 @@ $subtitle1 = get_post_meta(get_the_id(), 'nipo_single_subtitle_1', true);
 $subtitle2 = get_post_meta(get_the_id(), 'nipo_single_subtitle_2', true);
 $author_id = $post->post_author;
 $comments = get_comments();
-$post_cat = get_post_by_category($cat[0]->term_id,NIPTO_POST_PER_PAGA);
-$last_preview_count = get_post_meta($post_id,'nipo_post_preview_count',true);
+$post_cat = get_post_by_category($cat[0]->term_id, NIPTO_POST_PER_PAGA);
+$last_preview_count = get_post_meta($post_id, 'nipo_post_preview_count', true);
 $last_preview_count = $last_preview_count != null ? $last_preview_count : 0;
-update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
+$time_read= get_post_meta($post_id , "nipo_time_read_post",true);
+update_post_meta($post_id, 'nipo_post_preview_count', ++$last_preview_count);
 ?>
 
     <div class="author_header">
         <div class="container">
             <p>
-                <a href="<?php bloginfo('url');?>" style="text-decoration: none">
+                <a href="<?php bloginfo('url'); ?>" style="text-decoration: none">
                     <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.8592 7.17361L9.37402 0.117516C9.25195 0.0394289 9.13302 0 9.01408 0C8.89515 0 8.77621 0.0394289 8.68231 0.117516L0.169008 7.17361C0.0572708 7.26769 0 7.39706 0 7.52642C0 7.78879 0.226667 7.99653 0.502348 7.99653C0.619969 7.99653 0.737715 7.95796 0.831925 7.87916L2.00312 6.88255L2.00331 12.6744C2.00331 13.9719 3.12663 15 4.50722 15H13.4931C14.8737 15 15.9971 13.9454 15.9971 12.6744L15.9971 6.88255L17.1956 7.87922C17.2926 7.9586 17.4085 7.99682 17.4992 7.99682C17.7724 7.99682 18 7.78917 18 7.55288C18 7.39706 17.9718 7.26769 17.8592 7.17361ZM10.5289 14.1121H7.52425V9.40804H10.5289V14.1121ZM14.9953 6.1152V12.7009C14.9953 13.4791 14.3214 14.1121 13.493 14.1121H11.503V9.24928C11.5305 8.82003 11.1549 8.46723 10.6948 8.46723H7.35524C6.89828 8.46723 6.52269 8.82003 6.52269 9.24928V14.1121H4.50704C3.67762 14.1121 3.00469 13.48 3.00469 12.7009V6.1152C3.00469 6.10411 2.99876 6.09487 2.99797 6.08397L9.01408 1.09773L15.0297 6.08403C15.0297 6.09462 14.9953 6.10344 14.9953 6.1152Z"
                               fill="#333C52"></path>
                     </svg>
                 </a>
-                <span><?php echo "/".$cat[0]->name . " / " . $post->post_title ?></span>
+                <span><?php echo "/" . $cat[0]->name . " / " . $post->post_title ?></span>
             </p>
         </div>
     </div>
@@ -36,7 +37,7 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                 <div class="nipo_single_header ">
                     <div class="single_header_right inline_block">
                         <div class="single_tax">
-                            <span><?php echo $cat[0]->name ?></span>
+                            <a href="<?php echo get_tag_link($cat[0])?>"><span><?php echo $cat[0]->name ?></span></a>
                         </div>
                         <div class="single_create_time">
                             <svg width="12" height="14" viewBox="0 0 16 18" fill="none"
@@ -56,11 +57,11 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                                     <path d="M5.5 0C2.46211 0 0 2.46211 0 5.5C0 8.53789 2.46211 11 5.5 11C8.53789 11 11 8.53789 11 5.5C11 2.46211 8.53789 0 5.5 0ZM5.5 10.3125C2.84668 10.3125 0.6875 8.15332 0.6875 5.5C0.6875 2.84668 2.84668 0.6875 5.5 0.6875C8.15332 0.6875 10.3125 2.84668 10.3125 5.5C10.3125 8.15332 8.15332 10.3125 5.5 10.3125ZM7.60762 6.31855L5.84375 5.30234V2.40625C5.84375 2.21719 5.68906 2.0625 5.5 2.0625C5.31094 2.0625 5.15625 2.21719 5.15625 2.40625V5.5C5.15625 5.62287 5.22171 5.73633 5.32812 5.79777L7.26301 6.91496C7.31758 6.9459 7.37559 6.96094 7.43359 6.96094C7.55242 6.96094 7.66799 6.89951 7.7318 6.78906C7.82676 6.62363 7.7709 6.41523 7.60762 6.31855Z"
                                           fill="#919CBA"></path>
                                 </svg>
-                                زمان مطالعه : <span>۷ دقیقه</span></p>
+                                زمان مطالعه : <span class="persian"><?php echo $time_read !=null ? $time_read : 0  . " دقیقه"?></span></p>
                         </div>
                     </div>
                 </div>
-                <div class="single_title">
+                <div class="single_title word_space">
                     <h5><?php echo $post->post_title ?></h5>
                     <p><?php echo $subtitle1 ?></p>
                 </div>
@@ -84,7 +85,7 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                             </svg>
                         </div>
                         <div class="comment_count">
-                            <span>2</span>
+                            <span class="persian"><?php echo get_comments_number($post_id) ?></span>
                         </div>
                     </div>
 
@@ -97,7 +98,7 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                             </svg>
                         </button>
                         <div class="like_count">
-                            <span><?php echo get_post_meta(get_the_id(), 'nipo_like_count', true) != null ? get_post_meta(get_the_id(), 'nipo_like_count', true) : 0 ?></span>
+                            <span class="persian"><?php echo get_post_meta(get_the_id(), 'nipo_like_count', true) != null ? get_post_meta(get_the_id(), 'nipo_like_count', true) : 0 ?></span>
                         </div>
                     </div>
 
@@ -155,7 +156,16 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                 </div>
                 <hr>
                 <div class="single_hashtag">
-                    <button type="button" class="hashtag_item">#بیت کوین</button>
+                    <?php $tags = get_tags(array('get' => 'all'));
+
+                    foreach ($tags as $tag) :
+                        ?>
+                        <div class="hashtag_item inline_block">
+                            <span><a href="<?php echo get_term_link($tag) ?>"><?php echo "#" . $tag->name ?></a></span>
+                        </div>
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
                 <hr>
                 <div class="single_author">
@@ -173,10 +183,7 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                                است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط
-                                فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای
-                                زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                            <p><?php echo get_the_author_meta('description', $author_id); ?></p>
                         </div>
                     </div>
                 </div>
@@ -190,16 +197,18 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="article_item_image inline_block">
-                                                    <img src="http://localhost/nipoto/wp-content/themes/nipoto/assets/images/Rectangle 17.png"
-                                                         alt="artacode" class=""></div>
+                                                    <a href="<?php echo get_permalink($post->ID) ?>"><img
+                                                                src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
+                                                                alt="artacode" class=""></a></div>
                                             </div>
                                             <div class="col-9">
                                                 <div class="article_item_content_detail inline_block">
                                                     <div class="article_item_content_title">
-                                                        <span><?php echo $cat[0]->name?></span>
+                                                        <span><a href="<?php echo get_tag_link($cat[0]) ?>"><?php echo $cat[0]->name ?></a></span>
                                                     </div>
                                                     <div class="article_item_content_info">
-                                                        <p><?php echo $post->post_title?></p>
+                                                        <a href="<?php echo get_permalink($post->ID) ?>">
+                                                            <p class="word_space"><?php echo $post->post_title ?></p></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,18 +327,18 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="article_item_image inline_block">
-                                                    <img src="<?php echo get_the_post_thumbnail_url($item->ID) ?>"
-                                                         alt="">
-
+                                                    <a href="<?php echo get_permalink($item->ID) ?>"><img
+                                                                src="<?php echo get_the_post_thumbnail_url($item->ID) ?>"
+                                                                alt=""></a>
                                                 </div>
                                             </div>
                                             <div class="col-9">
                                                 <div class="article_item_content_detail inline_block">
                                                     <div class="article_item_content_title">
-                                                        <span><?php echo get_the_category($item->ID)[0]->name; ?></span>
+                                                        <span><a href="<?php echo get_tag_link(get_the_category($item->ID)[0]) ?>"><?php echo get_the_category($item->ID)[0]->name; ?></a></span>
                                                     </div>
                                                     <div class="article_item_content_info">
-                                                        <p><?php echo $item->post_title ?></p>
+                                                        <a href="<?php echo get_permalink($item->ID)?>"><p class="word_space"><?php echo $item->post_title ?></p></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -349,16 +358,18 @@ update_post_meta($post_id,'nipo_post_preview_count',++$last_preview_count);
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="article_item_image inline_block">
-                                                <?php nipoto_image('Rectangle 17.png', 'artacode'); ?>
+                                                <a href="<?php echo get_permalink($post->ID) ?>"><img
+                                                            src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
+                                                            alt=""></a>
                                             </div>
                                         </div>
                                         <div class="col-9">
                                             <div class="article_item_content_detail inline_block">
                                                 <div class="article_item_content_title">
-                                                    <span>اخبار روزانه</span>
+                                                    <span><a href="<?php echo get_tag_link(get_the_category($post->ID)[0]) ?>"><?php echo get_the_category($post->ID)[0]->name; ?></a></span>
                                                 </div>
                                                 <div class="article_item_content_info">
-                                                    <p><?php echo $post->post_title ?></p>
+                                                    <a href="<?php echo get_permalink($post->ID)?>"> <p class="word_space"><?php echo $post->post_title ?></p></a>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,0 +1,3 @@
+<?php
+define("NIPTO_POST_PER_PAGA",5);
+define("NIPO_AUTHOR_POST_PER_PAGE",5);

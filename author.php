@@ -1,24 +1,29 @@
 <?php get_header();
+
 use Carbon\Carbon;
+
 $current_user_id = get_the_author_meta('ID');
 $args = array(
     'author' => $current_user_id,
     'orderby' => 'post_date',
     'order' => 'ASC',
-    'posts_per_page' => -1
+    'posts_per_page' => NIPO_AUTHOR_POST_PER_PAGE
 );
 $posts = get_posts($args);
+$post_author = post_author_selector(NIPO_AUTHOR_POST_PER_PAGE, $current_user_id);
 ?>
 
     <div class="author_header">
         <div class="container">
             <p>
-                <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.8592 7.17361L9.37402 0.117516C9.25195 0.0394289 9.13302 0 9.01408 0C8.89515 0 8.77621 0.0394289 8.68231 0.117516L0.169008 7.17361C0.0572708 7.26769 0 7.39706 0 7.52642C0 7.78879 0.226667 7.99653 0.502348 7.99653C0.619969 7.99653 0.737715 7.95796 0.831925 7.87916L2.00312 6.88255L2.00331 12.6744C2.00331 13.9719 3.12663 15 4.50722 15H13.4931C14.8737 15 15.9971 13.9454 15.9971 12.6744L15.9971 6.88255L17.1956 7.87922C17.2926 7.9586 17.4085 7.99682 17.4992 7.99682C17.7724 7.99682 18 7.78917 18 7.55288C18 7.39706 17.9718 7.26769 17.8592 7.17361ZM10.5289 14.1121H7.52425V9.40804H10.5289V14.1121ZM14.9953 6.1152V12.7009C14.9953 13.4791 14.3214 14.1121 13.493 14.1121H11.503V9.24928C11.5305 8.82003 11.1549 8.46723 10.6948 8.46723H7.35524C6.89828 8.46723 6.52269 8.82003 6.52269 9.24928V14.1121H4.50704C3.67762 14.1121 3.00469 13.48 3.00469 12.7009V6.1152C3.00469 6.10411 2.99876 6.09487 2.99797 6.08397L9.01408 1.09773L15.0297 6.08403C15.0297 6.09462 14.9953 6.10344 14.9953 6.1152Z"
-                          fill="#333C52"/>
-                </svg>
+                <a href="<?php bloginfo('url'); ?>" style="text-decoration: none">
+                    <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.8592 7.17361L9.37402 0.117516C9.25195 0.0394289 9.13302 0 9.01408 0C8.89515 0 8.77621 0.0394289 8.68231 0.117516L0.169008 7.17361C0.0572708 7.26769 0 7.39706 0 7.52642C0 7.78879 0.226667 7.99653 0.502348 7.99653C0.619969 7.99653 0.737715 7.95796 0.831925 7.87916L2.00312 6.88255L2.00331 12.6744C2.00331 13.9719 3.12663 15 4.50722 15H13.4931C14.8737 15 15.9971 13.9454 15.9971 12.6744L15.9971 6.88255L17.1956 7.87922C17.2926 7.9586 17.4085 7.99682 17.4992 7.99682C17.7724 7.99682 18 7.78917 18 7.55288C18 7.39706 17.9718 7.26769 17.8592 7.17361ZM10.5289 14.1121H7.52425V9.40804H10.5289V14.1121ZM14.9953 6.1152V12.7009C14.9953 13.4791 14.3214 14.1121 13.493 14.1121H11.503V9.24928C11.5305 8.82003 11.1549 8.46723 10.6948 8.46723H7.35524C6.89828 8.46723 6.52269 8.82003 6.52269 9.24928V14.1121H4.50704C3.67762 14.1121 3.00469 13.48 3.00469 12.7009V6.1152C3.00469 6.10411 2.99876 6.09487 2.99797 6.08397L9.01408 1.09773L15.0297 6.08403C15.0297 6.09462 14.9953 6.10344 14.9953 6.1152Z"
+                              fill="#333C52"></path>
+                    </svg>
+                </a>
                 /نگارنده ها /
-                <span><?php echo  get_the_author_meta('display_name') ?></span>
+                <span><?php echo get_the_author_meta('display_name') ?></span>
             </p>
         </div>
     </div>
@@ -39,10 +44,11 @@ $posts = get_posts($args);
                                             <img src="<?php echo $profile_url ?>" alt="">
                                         </div>
                                         <div class="author_profile_details">
-                                            <span><a href="#">درباره نگارنده</a></span>
+                                            <span><a>درباره نگارنده</a></span>
                                             <h4><?php echo get_the_author_meta('display_name') ?></h4>
-                                            <span>تعداد مطلب : </span><span
-                                                    class="fw-bold"><?php echo count($posts) ?></span>
+                                            <p><span>تعداد مطلب : </span><span
+                                                        class="fw-bold"><?php echo count_user_posts($current_user_id) ?></span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -53,23 +59,25 @@ $posts = get_posts($args);
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
-                            <?php foreach ($posts as $post) : ?>
+                            <?php foreach ($post_author["posts"] as $post) : ?>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-12">
                                     <div class="article_single">
                                         <div class="article_single_content">
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                     <div class="article_single_img inline_block">
-                                                        <img src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
-                                                             alt="">
+                                                        <a href="<?php echo get_permalink($post->ID) ?>"><img
+                                                                    src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
+                                                                    alt=""></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                                                     <div class="article_single_content_info inline_block">
                                                         <div class="article_single_content_title">
-                                                            <h6><?php echo substr($post->post_title ,0 ,100).". . ." ?></h6>
+                                                            <a href="<?php echo get_permalink($post->ID) ?>">
+                                                                <h6><?php echo substr($post->post_title, 0, 100) . ". . ." ?></h6>
+                                                            </a>
                                                         </div>
                                                         <div class="article_single_content_detail">
                                                             <p><?php echo substr($post->post_content, 0, 250) . " . . ." ?></p>
@@ -113,15 +121,17 @@ $posts = get_posts($args);
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                            <nav aria-label="...">
-                                <ul class="pagination pagination-md">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">1</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                </ul>
+                            <nav aria-label="..." class="text-center">
+                                <?php foreach ($post_author['pagination'] as $authpage): ?>
+                                    <div class="author_pagination text-center inline_block">
+                                        <a href="<?php echo '?page=' . $authpage->page ?>">
+                                            <p <?php if ($authpage->isCurrent) : ?> style="color: black; background:
+                                #FFF1ED;" <?php endif; ?>
+                                                    class="persian"><?php echo intval($authpage->page) ?></p></a>
+                                    </div>
+                                <?php endforeach; ?>
                             </nav>
+
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
@@ -186,18 +196,20 @@ $posts = get_posts($args);
                                                 <div class="row">
                                                     <div class="col-3">
                                                         <div class="article_item_image inline_block">
-                                                            <img src="<?php echo get_the_post_thumbnail_url($item->ID) ?>"
-                                                                 alt="">
+                                                            <a href="<?php echo get_permalink($item->ID) ?>"><img
+                                                                        src="<?php echo get_the_post_thumbnail_url($item->ID) ?>"
+                                                                        alt=""></a>
 
                                                         </div>
                                                     </div>
                                                     <div class="col-9">
                                                         <div class="article_item_content_detail inline_block">
                                                             <div class="article_item_content_title">
-                                                                <span><?php echo get_the_category($item->ID)[0]->name; ?></span>
+                                                                <a href="<?php echo get_tag_link(get_the_category($item->ID)[0]) ?>"><span><?php echo get_the_category($item->ID)[0]->name; ?></span></a>
                                                             </div>
                                                             <div class="article_item_content_info">
-                                                                <p><?php echo $item->post_title ?></p>
+                                                                <a href="<?php echo get_permalink($item->ID) ?>">
+                                                                    <p><?php echo $item->post_title ?></p></a>
                                                             </div>
                                                         </div>
                                                     </div>
