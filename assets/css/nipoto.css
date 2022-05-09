@@ -333,6 +333,7 @@ a {
 .article_single_content_info {
     width: 100%;
     margin-top: 7px;
+    padding-left: 15px;
 }
 
 .article_single_content {
@@ -423,7 +424,9 @@ a {
 .article_item_content_detail {
     width: 100%;
 }
-
+.article_item_content_info {
+    padding: 10px 0;
+}
 .article_item_content_info a {
     margin: 0;
     line-height: 26px;
@@ -623,7 +626,9 @@ a {
     color: #5C6276;
     font-size: 12px;
 }
-
+.author_profile_details p {
+    background: #FFFFFF;
+}
 .author_profile_details h4 {
     margin-bottom: 0;
 }
@@ -640,7 +645,13 @@ a {
     text-align: right;
     color: #424A5D;
 }
-
+ .author_pagination p {
+     padding: 5px;
+     color: #70788F;
+     border: 1px solid #DAE1ED;
+     border-radius: 10px;
+     width: 40px;
+ }
 
 /* Single Style Css */
 .nipo_single_header {

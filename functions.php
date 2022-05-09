@@ -218,9 +218,9 @@ function nipoto_weighet_footer()
 }
 
 //Get All posts
-function post_author_selector($count)
+function post_author_selector($count,$author)
 {
-    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $paged = isset($_GET["page"]) ? $_GET["page"] : 1;
 
     // WP_Query arguments
     $args = array(
@@ -229,15 +229,15 @@ function post_author_selector($count)
         'posts_per_page' => $count, // use -1 for all post
         'order' => 'DESC', // Also support: ASC
         'orderby' => 'date', // Also support: none, rand, id, title, slug, modified, parent, menu_order, comment_count
-        'paged' => $paged
-
+        'paged' => $paged,
+        'author' => $author,
     );
 
 
 // The Query
     $query = new WP_Query($args);
     $query->arta_pagination_max = $query->max_num_pages;
-    return $query->posts;
+    return array("posts" => $query->posts, "pagination" => wpdocs_get_paginated_links($query));
 }
 
 function post_category_selector($count)
@@ -452,6 +452,12 @@ function get_post_by_category($term_id = -1, $count = NIPTO_POST_PER_PAGA)
     return array("posts" => $query->posts, "pagination" => wpdocs_get_paginated_links($query));
 
 }
+
+
+function get_author_posts ($count = NIPTO_POST_PER_PAGA){
+
+}
+
 
 function get_post_by_term($term_id = -1, $taxonomy = 'category', $count = NIPTO_POST_PER_PAGA)
 {
