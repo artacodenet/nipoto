@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 <?php
 
+
 use Carbon\Carbon;
 
 $term_id = get_queried_object()->term_id;
@@ -46,7 +47,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
 
                                 <div class="selector_info">
                                     <div class="infoTitle">
-                                        <h6 class="word_space">
+                                        <h6>
                                             <a href="<?php echo get_permalink($post_category_selector["posts"][0]->ID) ?>"> <?php echo $post_category_selector["posts"][0]->post_title ?></a>
                                         </h6>
                                     </div>
@@ -95,12 +96,9 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                                                             </div>
                                                         </div>
                                                         <div class="selector_left_info">
-                                                            <p class="word_space">
-                                                                <a href="<?php echo get_permalink($post->ID) ?>">
-                                                                    <?php echo $post->post_title; ?>
-                                                                </a>
-                                                            </p>
-
+                                                            <a href="<?php echo get_permalink($post->ID) ?>">
+                                                                <?php echo $post->post_title; ?>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,7 +149,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                                                             <div class="article_single_content_title">
                                                                 <h6>
                                                                     <a href="<?php echo get_permalink($post->ID); ?>">
-                                                                        <p class="word_space"><?php echo $post->post_title; ?></p>
+                                                                        <?php echo substr($post->post_title, 0, 100) . ". . ."; ?>
                                                                     </a>
                                                                 </h6>
                                                             </div>
@@ -222,7 +220,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                                                     <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                                                         <div class="article_single_content_info inline_block">
                                                             <div class="article_single_content_title">
-                                                                <h6 class="word_space"><?php echo $post->post_title; ?></h6>
+                                                                <h6><?php echo $post->post_title; ?></h6>
                                                             </div>
                                                             <div class="article_single_content_detail">
                                                                 <p><?php echo substr($post->post_content, 0, 250) . " . . ." ?> </p>
@@ -339,7 +337,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                             <div class="col-12 col-sm-12 col-md-6 col-lg-12 ">
                                 <p class="most_popular_content mb-3">محبوبترین مطالب</p>
                                 <?php
-                                $most_popular = get_most_popular_content(MOST_POPULAR_PER_PAGE);
+                                $most_popular = get_most_popular_content(-1);
                                 if ($most_popular != null):
                                     foreach ($most_popular as $post):
                                         ?>
@@ -367,9 +365,9 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                                                                 </a>
                                                             </div>
                                                             <div class="article_item_content_info">
-                                                                <p class="word_space">
+                                                                <p>
                                                                     <a href="<?php echo get_permalink($post->ID) ?>">
-                                                                        <?php echo $post->post_content; ?>
+                                                                        <?php echo substr($post->post_content, '0', '100') . '. . .' ?>
                                                                     </a>
                                                                 </p>
                                                             </div>
@@ -386,7 +384,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-12 ">
                                 <p class="most_visited_content mb-3 mt-5">پربازدیدترین مطالب</p>
-                                <?php foreach (get_post_by_review(MOST_PERVIWE_PER_PAGE) as $post) : ?>
+                                <?php foreach (get_post_by_review(5) as $post) : ?>
                                     <div class="articles_item">
                                         <div class="article_item_content">
                                             <div class="row">
@@ -412,7 +410,7 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
                                                         </div>
                                                         <div class="article_item_content_info">
                                                             <a href="<?php echo get_permalink($post->post_id) ?>">
-                                                                <p class="word_space"><?php echo $post->post_title; ?></p>
+                                                                <p><?php echo substr($post->post_title, 0, 250) . " . . ." ?></p>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -430,3 +428,4 @@ $post_category_selector = post_category_selector(4, $term_id, $current->taxonomy
     </div>
 
 <?php get_footer();
+
