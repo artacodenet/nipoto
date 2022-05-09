@@ -4,15 +4,16 @@
             <label>برچسب های پر بازدید : </label>
         </div>
         <?php $tags = get_tags(array('get' => 'all'));
-
+        $i = 1;
         foreach ($tags as $tag) :
+            if($i > NIPTO_HEADER_TAG_COUNT)
             ?>
             <div class="Hashtag_bc">
                 <span><a href="<?php echo get_term_link($tag) ?>"><?php echo "#" . $tag->name ?></a></span>
             </div>
         <?php
+            $i++;
         endforeach;
-
         ?>
 
     </div>
