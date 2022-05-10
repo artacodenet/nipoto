@@ -1,9 +1,10 @@
 <?php get_header(); ?>
+
 <?php
 
 use Carbon\Carbon;
 
-$post_author_selector = post_author_selector(4);
+//$post_author_selector = post_author_selector(4);
 $post_by_meta = get_post_by_postmeta(4, 'nipo_is_video', 'nipo_is_selector');
 $posts_is_selector = get_post_is_selector(-1, 'nipo_is_selector');
 $post_by_cat = get_post_by_category(4);

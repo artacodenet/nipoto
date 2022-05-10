@@ -1,10 +1,13 @@
 <?php get_header(); ?>
 <?php
 
+
+use Carbon\Carbon;
+
 $term_id = get_queried_object()->term_id;
 $current = get_term($term_id);
-$post_cat = get_post_by_term($term_id,$current->taxonomy, NIPTO_POST_PER_PAGA);
-$post_category_selector = post_category_selector(4);
+$post_cat = get_post_by_term($term_id, $current->taxonomy, NIPTO_POST_PER_PAGA);
+$post_category_selector = post_category_selector(4, $term_id, $current->taxonomy);
 
 
 ?>
@@ -29,14 +32,16 @@ $post_category_selector = post_category_selector(4);
     <div class="selected_editor">
         <div class="container">
             <div class="selector_editor_title">
-                <h5 class="nipo_main_title">منتخب آموزش تحلیل تکنیکال</h5>
+                <h5 class="nipo_main_title">منتخب <?php echo $current->name; ?></h5>
             </div>
             <div class="row">
                 <?php if ($post_category_selector["posts"] != null)  : ?>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
                         <div class="selector_editor_right">
                             <div class="selector_image">
-                                <img src='<?php echo get_the_post_thumbnail_url($post_category_selector["posts"][0]->ID) ?>'>
+                                <a href="<?php echo get_permalink($post->ID) ?>">
+                                    <img src='<?php echo get_the_post_thumbnail_url($post_category_selector["posts"][0]->ID) ?>'>
+                                </a>
                             </div>
                             <div class="infoContent_footer">
 
@@ -47,7 +52,9 @@ $post_category_selector = post_category_selector(4);
                                         </h6>
                                     </div>
                                     <div class="infoContent">
-                                        <p><?php echo $post_category_selector["posts"][0]->post_content ?></p>
+                                        <p>
+                                            <?php echo substr($post_category_selector["posts"][0]->post_content, 0, 430); ?>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -56,6 +63,7 @@ $post_category_selector = post_category_selector(4);
                     <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
                         <div class="row">
                             <?php
+                            unset($post_category_selector["posts"][0]);
                             foreach ($post_category_selector["posts"] as $post) :
                                 ?>
                                 <div class="col-md-6 col-lg-12">
@@ -64,17 +72,27 @@ $post_category_selector = post_category_selector(4);
                                             <div class="row">
                                                 <div class="col-3">
                                                     <div class="selector_left_image inline_block">
-                                                        <img src='<?php echo get_the_post_thumbnail_url($post->ID) ?>'>
+                                                        <a href="<?php echo get_permalink($post->ID) ?>">
+                                                            <img src='<?php echo get_the_post_thumbnail_url($post->ID) ?>'>
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-9">
                                                     <div class="selector_left_content inline_block">
                                                         <div class="leftContentTitle">
                                                             <div class="title_r inline_block">
-                                                                <span><?php echo $current->name ?></span>
+                                                                <?php
+                                                                $terms = get_the_terms($post->ID, "category");
+                                                                $current_term = get_term($terms[0])->name;
+                                                                ?>
+                                                                <a href="<?php echo get_term_link($terms[0], "category") ?>">
+                                                                    <span>
+                                                                        <?php echo $current_term; ?>
+                                                                    </span>
+                                                                </a>
                                                             </div>
                                                             <div class="title_l inline_block text-end">
-                                                                <span>دقایقی قبل</span>
+                                                                <span><?php echo handle_date(Carbon::create($post->post_date)->diffForHumans()); ?></span>
                                                             </div>
                                                         </div>
                                                         <div class="selector_left_info">
@@ -109,7 +127,7 @@ $post_category_selector = post_category_selector(4);
                         </div>
                         <div class="row">
                             <?php
-                            $post_by_meta = get_post_is_video(2, 'nipo_is_video');
+                            $post_by_meta = get_post_is_video(5, 'nipo_is_video', $current->taxonomy, $term_id);
                             foreach ($post_cat["posts"] as $post) :
                                 ?>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-12">
@@ -120,14 +138,20 @@ $post_category_selector = post_category_selector(4);
                                                 <div class="row">
                                                     <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                         <div class="article_single_img inline_block">
-                                                            <img src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
-                                                                 alt="">
+                                                            <a href="<?php echo get_permalink($post->ID); ?>">
+                                                                <img src="<?php echo get_the_post_thumbnail_url($post->ID) ?>"
+                                                                     alt="">
+                                                            </a>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                                                         <div class="article_single_content_info inline_block">
                                                             <div class="article_single_content_title">
-                                                                <h6><?php echo substr($post->post_title, 0, 100) . ". . ."; ?></h6>
+                                                                <h6>
+                                                                    <a href="<?php echo get_permalink($post->ID); ?>">
+                                                                        <?php echo substr($post->post_title, 0, 100) . ". . ."; ?>
+                                                                    </a>
+                                                                </h6>
                                                             </div>
                                                             <div class="article_single_content_detail">
                                                                 <p><?php echo substr($post->post_content, 0, 250) . " . . ." ?> </p>
@@ -322,17 +346,30 @@ $post_category_selector = post_category_selector(4);
                                                 <div class="row">
                                                     <div class="col-3">
                                                         <div class="article_item_image inline_block">
-                                                            <img src='<?php echo get_the_post_thumbnail_url($post->ID) ?>'>
-
+                                                            <a href="<?php echo get_permalink($post->ID) ?>">
+                                                                <img src='<?php echo get_the_post_thumbnail_url($post->ID) ?>'>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                     <div class="col-9">
                                                         <div class="article_item_content_detail inline_block">
                                                             <div class="article_item_content_title">
-                                                                <span>اخبار روزانه</span>
+                                                                <?php
+                                                                $terms = get_the_terms($post->ID, "category");
+                                                                $current_term = get_term($terms[0])->name;
+                                                                ?>
+                                                                <a href="<?php echo get_term_link($terms[0], "category") ?>">
+                                                            <span>
+                                                                <?php echo $current_term; ?>
+                                                            </span>
+                                                                </a>
                                                             </div>
                                                             <div class="article_item_content_info">
-                                                                <p><?php echo substr($post->post_content, '0', '100') . '. . .' ?></p>
+                                                                <p>
+                                                                    <a href="<?php echo get_permalink($post->ID) ?>">
+                                                                        <?php echo substr($post->post_content, '0', '100') . '. . .' ?>
+                                                                    </a>
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -353,16 +390,28 @@ $post_category_selector = post_category_selector(4);
                                             <div class="row">
                                                 <div class="col-3">
                                                     <div class="article_item_image inline_block">
-                                                        <?php nipoto_image('Rectangle 17.png', 'artacode'); ?>
+                                                        <a href="<?php echo get_permalink($post->post_id) ?>">
+                                                            <img src='<?php echo get_the_post_thumbnail_url($post->post_id) ?>'>
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-9">
                                                     <div class="article_item_content_detail inline_block">
                                                         <div class="article_item_content_title">
-                                                            <span>اخبار روزانه</span>
+                                                            <?php
+                                                            $terms = get_the_terms($post->ID, "category");
+                                                            $current_term = get_term($terms[0])->name;
+                                                            ?>
+                                                            <a href="<?php echo get_term_link($terms[0], "category") ?>">
+                                                            <span>
+                                                                <?php echo $current_term; ?>
+                                                            </span>
+                                                            </a>
                                                         </div>
                                                         <div class="article_item_content_info">
-                                                            <a href="<?php echo get_permalink($post->post_id )?>"><?php echo $post->post_title?></a>
+                                                            <a href="<?php echo get_permalink($post->post_id) ?>">
+                                                                <p><?php echo substr($post->post_title, 0, 250) . " . . ." ?></p>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
